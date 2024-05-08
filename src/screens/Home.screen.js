@@ -5,10 +5,14 @@ import {
   SafeAreaView,
   FlatList,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import tailwind from 'twrnc';
-import {reqGetAllChecklist} from '../libs/requests/Checklist.request';
+import {
+  reqDeleteChecklist,
+  reqGetAllChecklist,
+} from '../libs/requests/Checklist.request';
 import {XMarkIcon} from 'react-native-heroicons/mini';
 import ItemChecklist from '../components/organisms/ItemChecklist.organism';
 
@@ -28,6 +32,30 @@ const Home = () => {
     initData();
   }, []);
 
+  //   General Function
+  //   =======================
+
+  const onDeleteList = async id => {
+    const isConfirm = await new Promise(resolve => {
+      Alert.alert('Confirm Delete', 'Are you sure want to delete?', [
+        {
+          text: 'Delete',
+          onPress: () => resolve(true),
+        },
+        {
+          text: 'Cancel',
+          onPress: () => resolve(false),
+          style: 'cancel',
+        },
+      ]);
+    });
+
+    if (isConfirm) {
+      await reqDeleteChecklist(id);
+      return initData();
+    }
+  };
+
   return (
     <SafeAreaView style={tailwind`min-w-full min-h-full bg-white`}>
       <View style={tailwind`flex-1`}>
@@ -44,7 +72,12 @@ const Home = () => {
                   </Text>
                 )}
                 renderItem={({item}) => {
-                  return <ItemChecklist data={item} />;
+                  return (
+                    <ItemChecklist
+                      data={item}
+                      onDelete={() => onDeleteList(item.id)}
+                    />
+                  );
                 }}
               />
             </View>

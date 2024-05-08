@@ -17,3 +17,19 @@ export const reqGetAllChecklist = async () => {
     return [];
   }
 };
+
+export const reqDeleteChecklist = async id => {
+  try {
+    const token = await AsyncStorage.getItem('token');
+    const response = await Axios.delete('/checklist/' + id, {
+      headers: {
+        Authorization: `Bearer ${JSON.parse(token)}`,
+      },
+    });
+    return true;
+  } catch (err) {
+    console.log(err.response);
+
+    return false;
+  }
+};
