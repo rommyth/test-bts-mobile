@@ -5,6 +5,7 @@ import Splash from '../screens/Splash.screen';
 import Login from '../screens/Login.screen';
 import Register from '../screens/Register.screen';
 import Home from '../screens/Home.screen';
+import DetailChecklist from '../screens/DetailChecklist.screen';
 
 const Stack = createNativeStackNavigator();
 
@@ -15,6 +16,7 @@ const CoreRoute = () => {
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />
       <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="DetailChecklist" component={DetailChecklist} />
     </Stack.Navigator>
   );
 };

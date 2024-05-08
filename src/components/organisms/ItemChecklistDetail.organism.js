@@ -5,14 +5,15 @@ import {XMarkIcon} from 'react-native-heroicons/mini';
 import CheckBox from '../molecules/CheckBox.molecule';
 import {useNavigation} from '@react-navigation/native';
 
-const ItemChecklist = ({data, onDelete}) => {
+const ItemChecklistDetail = ({data, onDelete, onCheck}) => {
   const navigation = useNavigation();
 
   return (
     <TouchableOpacity
       style={tailwind`border border-gray-400 p-2 mb-2`}
-      onPress={() => navigation.push('DetailChecklist', {item: data})}>
+      disabled>
       <View style={tailwind`flex-row items-center justify-center gap-3`}>
+        <CheckBox isComplete={data.itemCompletionStatus} onPress={onCheck} />
         <Text style={tailwind`text-black flex-1 font-semibold text-base`}>
           {data?.name}
         </Text>
@@ -24,4 +25,4 @@ const ItemChecklist = ({data, onDelete}) => {
   );
 };
 
-export default ItemChecklist;
+export default ItemChecklistDetail;
